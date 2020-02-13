@@ -15,7 +15,7 @@ public class AdminController {
 		return "admin/main";
 	}
 	
-	@RequestMapping(value="/product")
+	// @RequestMapping(value="/product")
 	public String admin(Model model) {
 		model.addAttribute("BODY", "PRODUCT");
 		return "admin/main";

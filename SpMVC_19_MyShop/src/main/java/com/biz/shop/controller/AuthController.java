@@ -35,7 +35,7 @@ public class AuthController {
 		return "join";
 	}
 	
-	@ResponseBody
+	// @ResponseBody
 	@RequestMapping(value="/login_ok", method=RequestMethod.GET)
 	public CustomUserDetails login_ok() {
 		CustomUserDetails cUserDetails = (CustomUserDetails)SecurityContextHolder
