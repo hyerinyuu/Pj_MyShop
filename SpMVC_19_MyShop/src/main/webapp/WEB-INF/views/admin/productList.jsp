@@ -1,6 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
+$(function(){
+	/*
+		class pro_tr은 본문의 tr tag에 설정이 되어 있고,
+		본문의 tr tag를 click하면 이벤트가 발생하고 함수가 실행된다.
+		
+		이때 tr tag가 갖는 모든 정보는 this라는 내장 객체에 담겨
+		함수 내부로 전달된다.
+		
+	*/
+	
+	/*
+		tr tag가 클릭되면 id값을 추출하고
+		update method로 전달하기
+	*/
+	$(".pro_tr").click(function(){
+		let id = $(this).data("id")  // attr("data-id") id는 자주 써서 함수로 만들어버림
+		let c = $(this).attr("class") // class값을 가져오는 함수
+		
+		document.location.href="${rootPath}/admin/product/update/" + id
+		
+	})
+	
+})
+
+</script>
+<style>
+tr td{
+	cursor: pointer;
+}
+
+</style>
 <table class="col-md-4 col-12">
 	<tr>
 		<th>상품코드</th>
@@ -18,7 +50,7 @@
 		</c:when>
 		<c:otherwise>
 			<c:forEach var="PRO" items="${PRO_LIST}" varStatus="i">		
-				<tr>		
+				<tr class="pro_tr" data-id="${PRO.id}">		
 					<td>${PRO.p_code}</td>
 					<%
 						/* 상품이름이 길어질 경우에 효과주려고 class선언 */

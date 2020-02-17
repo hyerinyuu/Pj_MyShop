@@ -1,24 +1,22 @@
 package com.biz.shop.controller;
 
-import java.util.Locale;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
 
+// 사용자가 접속했을때 보일 화면을 만질 controller
 @Slf4j
+@RequestMapping(value="/user")
 @Controller
-public class HomeController {
+public class UserController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	@RequestMapping(value= {"/", ""}, method=RequestMethod.GET)
+	public String user() {
 		
-		log.debug("홈컨트롤러");
-		
-		return "redirect:/admin";
+		return "home";
 	}
 	
+
 }

@@ -35,21 +35,30 @@ tr, td, th {
 	<article class="col-md-7 col-12 bg-light pro-input">
 		<br/>
 		<form:form action="${rootPath}/admin/product/input" modelAttribute="productVO">
-			<div class="container-fluid form-group row">
-				<form:select path="p_b_code" class="custom-select-sm">
-					<option value="0">품목을 선택하세요</option>
-					<option value="B0001">공산품</option>
-					<option value="B0002">농산물</option>
-					<option value="B0003">수산물</option>
+		<div class="form-group">
+			<div class="container-fluid row">
+				<form:select path="p_b_code" class="custom-select-sm col-6">
+					<form:option value="0">품목을 선택하세요</form:option>
+					<form:option value="B0001">공산품</form:option>
+					<form:option value="B0002">농산물</form:option>
+					<form:option value="B0003">수산물</form:option>
 				</form:select>
 				
-				<form:select path="p_d_code" class="custom-select-sm">
-					<option value="0">거래처를 선택하세요</option>
-					<option value="D0001">대덕물산</option>
-					<option value="D0002">삼성농산</option>
-					<option value="D0003">목포수산</option>
+				
+				<form:select path="p_d_code" class="custom-select-sm col-6">
+					<form:option value="0">거래처를 선택하세요</form:option>
+					<form:option value="D0001">대덕물산</form:option>
+					<form:option value="D0002">삼성농산</form:option>
+					<form:option value="D0003">목포수산</form:option>
 				</form:select>
 			</div>
+			
+			<div class="container-fluid row">
+				<form:errors path="p_b_code" class="in-errors col-6"/>
+				<form:errors path="p_d_code" class="in-errors col-6" />
+			</div>
+			
+		</div>
 		
 			<div class="form-group">
 				<form:input path="p_code" class="form-control" placeholder="상품코드" />

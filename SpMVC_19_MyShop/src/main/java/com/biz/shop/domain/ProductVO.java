@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import com.sun.istack.NotNull;
 
@@ -54,11 +55,14 @@ public class ProductVO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long p_id;
+	@Column(name="p_id")
+	long id;
 	
+	@Size(min=5, max=5, message="*품목코드를 확인하세요")
 	@Column(name="p_b_code", length=5)
 	private String p_b_code;
 	
+	@Size(min=5, max=5, message="*거래처코드를 확인하세요")
 	@Column(name="p_d_code", length=5)
 	private String p_d_code;
 	
@@ -71,7 +75,7 @@ public class ProductVO {
 //	// Size는 문자열길이 유효성을 검사할 때 사용하는 Annotation으로 min,max 속성값을 둘 다 사용할 수 있다.
 //	@Max(13)
 	@Size(max = 13, message = "* 상품코드는 13자리 이하로 입력하세요")
-	@Column(name="p_code", length=13)
+	@Column(name="p_code", length=13, unique = true, nullable = false)  // 길이는 13자리, unique, not null
 	private String p_code;
 	
 	@NotBlank(message = "* 상품이름은 공백이 될 수 없습니다")

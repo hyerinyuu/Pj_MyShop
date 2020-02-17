@@ -74,12 +74,15 @@
 	
 	<security:csrf disabled="false" />
 	: csfr인증을 하지 않는것을 취소하겠다 ==> csfr인증을 하라
+	
+	user-expressions가 true이면 access의 permitAll뒤에 괄호가 없어도 됨
 -->
 <security:http auto-config="true" use-expressions="true">
 	<security:csrf disabled="false" />
 	<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
 	
 	<security:intercept-url pattern="/auth/**" access="permitAll()"/>
+	<security:intercept-url pattern="/user/**" access="permitAll()"/>
 	
 	<security:intercept-url pattern="/**" access="permitAll"/>
 	
@@ -107,7 +110,7 @@
 	<!--  logout을 시도해서 정상적으로 logout이 되면
 		  rootPath로 redirect하라	
 	 -->						 
-	<security:logout logout-url="/auth/logout"
+	<security:logout logout-url="/logout"
 					 logout-success-url="/"/>						 
 	
 </security:http>

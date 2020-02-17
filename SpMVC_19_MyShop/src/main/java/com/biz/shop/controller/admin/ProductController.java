@@ -8,14 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
+@SessionAttributes("productVO")
 @RequiredArgsConstructor
 @RequestMapping(value="/admin/product")
 @Controller
@@ -23,10 +27,15 @@ public class ProductController {
 	
 	private final ProductService proService;
 	
+	@ModelAttribute("productVO")
+	public ProductVO newProduct() {
+		return new ProductVO();
+	}
+	
 	@RequestMapping(value= {"","/"}, method=RequestMethod.GET)
-	public String product(Model model) {
+	public String product(@ModelAttribute("productVO") ProductVO productVO, Model model) {
 		
-		ProductVO productVO = new ProductVO();
+		productVO = new ProductVO();
 		
 		List<ProductVO> proList = proService.selectAll();
 		
@@ -44,7 +53,7 @@ public class ProductController {
 	 *  
 	 */
 	@RequestMapping(value="/input", method=RequestMethod.POST)
-	public String product(@Valid @ModelAttribute ProductVO productVO, BindingResult result, Model model) {
+	public String product(@Valid @ModelAttribute("productVO") ProductVO productVO, BindingResult result, Model model, SessionStatus status) {
 		
 		if(result.hasErrors()) {
 			model.addAttribute("BODY", "PRODUCT");
@@ -52,8 +61,26 @@ public class ProductController {
 		}
 		proService.save(productVO);
 		
+		status.setComplete();
 		return "redirect:/admin/product";
 		
+	}
+	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+	public String update(@PathVariable("id") String strId, @ModelAttribute("productVO") ProductVO productVO, Model model) {
+		
+		
+		
+		List<ProductVO> proList = proService.selectAll();
+		
+		model.addAttribute("PRO_LIST", proList);
+		
+		long id = Long.valueOf(strId);
+		productVO = proService.findById(id);
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("BODY", "PRODUCT");
+		return "admin/main";
+
 	}
 
 	
