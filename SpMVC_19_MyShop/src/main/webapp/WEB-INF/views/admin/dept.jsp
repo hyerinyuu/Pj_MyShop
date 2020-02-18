@@ -39,10 +39,12 @@ tr, td, th {
 			
 			<div class="form-group">
 				<form:input path="d_code" class="form-control" placeholder="거래처코드" />
+				<form:errors path="d_code" class="in-errors" />
 			</div>		
 			
 			<div class="form-group">
 				<form:input path="d_name" class="form-control" placeholder="거래처명" />
+				<form:errors path="d_name" class="in-errors" />
 			</div>		
 			
 			<div class="form-group">
@@ -79,7 +81,7 @@ tr, td, th {
 		</form:form>
 	</article>
 	
-	<article class="col-md-4 col-12 bg-light dept-list">
+	<article class="col-md-4 col-12 bg-light list-body">
 		<%@ include file="/WEB-INF/views/admin/deptList.jsp" %>
 	</article>
 </article>

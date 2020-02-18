@@ -8,6 +8,34 @@
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 </head>
+<style>
+.in-errors{
+	color: red;
+	font-size: 16px;
+}
+/*
+	col-md-7 col-12
+	해상도가 768보다 크면 7칸만 차지하고
+	그 이하이면 12칸을 차지하여 풀width으로 보여라
+*/
+tr, td, th {
+	white-space: nowrap;
+}
+
+.list-body{
+	overflow: auto;
+}
+
+.p_name {
+	display: inline-block;
+	width: 80px;
+	padding: 0 5 px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+</style>
 <body>
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 
@@ -23,7 +51,7 @@
 				<a class="nav-link" href="#">품목정보</a>
 			</li>
 			<li class="navbar-item">
-				<a class="nav-link" href="${rootPath}/admin/dept/">거래처정보</a>
+				<a class="nav-link" href="${rootPath}/admin/dept">거래처정보</a>
 			</li>
 			<li class="navbar-item">
 				<form:form action="${rootPath}/logout" name="logout_form">

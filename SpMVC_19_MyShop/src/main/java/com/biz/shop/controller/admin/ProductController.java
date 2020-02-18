@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.biz.shop.domain.DeptVO;
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.ProductService;
 
@@ -37,11 +38,21 @@ public class ProductController {
 		
 		productVO = new ProductVO();
 		
-		List<ProductVO> proList = proService.selectAll();
-		
-		model.addAttribute("PRO_LIST", proList);
+		this.modelMapping(model);
 		model.addAttribute("productVO", productVO);
-		model.addAttribute("BODY", "PRODUCT");
+		return "admin/main";
+	}
+	
+	@RequestMapping(value="/detail", method=RequestMethod.POST)
+	public String product_detail(@Valid @ModelAttribute("productVO") ProductVO productVO, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			model.addAttribute("BODY", "PRODUCT");
+			return "admin/main";
+		}
+		
+		this.modelMapping(model);
+		model.addAttribute("PRO_BODY", "DETAIL");
 		return "admin/main";
 	}
 	
@@ -53,12 +64,8 @@ public class ProductController {
 	 *  
 	 */
 	@RequestMapping(value="/input", method=RequestMethod.POST)
-	public String product(@Valid @ModelAttribute("productVO") ProductVO productVO, BindingResult result, Model model, SessionStatus status) {
+	public String product(@ModelAttribute("productVO") ProductVO productVO, Model model, SessionStatus status) {
 		
-		if(result.hasErrors()) {
-			model.addAttribute("BODY", "PRODUCT");
-			return "admin/main";
-		}
 		proService.save(productVO);
 		
 		status.setComplete();
@@ -69,18 +76,22 @@ public class ProductController {
 	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
 	public String update(@PathVariable("id") String strId, @ModelAttribute("productVO") ProductVO productVO, Model model) {
 		
-		
-		
-		List<ProductVO> proList = proService.selectAll();
-		
-		model.addAttribute("PRO_LIST", proList);
+		this.modelMapping(model);		
 		
 		long id = Long.valueOf(strId);
 		productVO = proService.findById(id);
 		model.addAttribute("productVO", productVO);
-		model.addAttribute("BODY", "PRODUCT");
+		
 		return "admin/main";
-
+	}
+	
+	private void modelMapping(Model model) {
+		
+		List<ProductVO> proList = proService.selectAll();
+		
+		model.addAttribute("PRO_LIST", proList);
+		model.addAttribute("BODY", "PRODUCT");
+		
 	}
 
 	

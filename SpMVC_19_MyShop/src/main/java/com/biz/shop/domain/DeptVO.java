@@ -52,14 +52,14 @@ public class DeptVO {
 	private String d_code;
 	
 	@Column(length = 30, nullable = false)
-	@NotEmpty(message = "*거래처코드는 반드시 입력하세요")
+	@NotEmpty(message = "*거래처이름은 반드시 입력하세요")
 	private String d_name;
 	
 	@Column(length = 30)
 	private String d_ceo;
 	
 	@Column(length = 13, unique = true, nullable = false)
-	@Size(min=13, max=13)
+	// @Size(min=13, max=13)
 	private String d_sid;  // 409-01-123456
 
 	@Column(length = 20)
