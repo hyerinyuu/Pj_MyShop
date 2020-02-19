@@ -20,13 +20,32 @@ $(function(){
 		window.close()
 		// IE 창닫기
 		window.open('about:blank', '_self').self.close() 
-		
-		
-		
-		
 		// document.location.href="${rootPath}/admin/dept/update/" + id
 		
 	})
+	var dept_call_func = function(key){
+		var id = $(this).data("id")
+		if(key == "edit"){
+			document.location.href="${rootPath}/admin/dept/update/" + id
+		}else if(key == "delete"){
+			if(confirm("거래처정보를 삭제하시겠습니까?")){
+				document.location.href="${rootPath}/admin/dept/delete/" + id
+			}	
+		}
+	}
+	
+	$.contextMenu({
+		selector : ".dept_tr",
+		items : {
+			"edit" : {name:"거래처 수정", icon:"edit"},
+			"delete" : {name:"거래처 삭제", icon:"delete"}
+		},
+		callback : dept_call_func 
+	})
+	
+	
+	
+	
 	
 })
 

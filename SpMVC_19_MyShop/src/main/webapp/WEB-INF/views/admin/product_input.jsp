@@ -25,15 +25,15 @@ $(function(){
 		*/
 		if(e.keyCode == KEY_F9){
 			let search = $(this).val()
-			let dept_url = "${rootPath}/admin/dept/list"
+			let dept_url = "${rootPath}/admin/dept/search/" + search
 			
 			let win_style = "toolbar=no,"
 				win_style += "scrollbar=yes,"
 				win_style += "resizable=no,"
-				win_style += "top=500,"
-				win_style += "left=500,"
-				win_style += "width=400,"
-				win_style += "height=400"
+				win_style += "top=250,"
+				win_style += "left=700,"
+				win_style += "width=500,"
+				win_style += "height=500"
 			
 			window.open(dept_url, "_blank", win_style)
 		}

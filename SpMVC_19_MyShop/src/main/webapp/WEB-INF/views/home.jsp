@@ -26,6 +26,16 @@ $(function(){
 	
 })
 </script>
+<style>
+
+#search-div{
+	margin: 0 auto;
+}
+#search-bar{
+	padding-top: 3rem;
+}
+
+</style>
 
 </head>
 <body>
@@ -33,7 +43,7 @@ $(function(){
 <header class="jumbotron text-center">
 	<h3>MY SHOP</h3>
 </header>
-<nav class="navbar navbar-expand-sm bg-light">
+<nav class="navbar navbar-expand-sm bg-light d-flex">
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="${rootPath}/">HOME</a></li>
 		
@@ -53,8 +63,25 @@ $(function(){
 		<sec:authorize access="hasRole('ADMIN')">
 			<li class="nav-item"><a class="nav-link" href="${rootPath}/admin/">ADMIN</a></li>
 		</sec:authorize>
+		
+		<form class="form-inline ml-auto" action="#">
+	    	<input class="form-control mr-sm-2" placeholder="Search">
+	    	<button class="btn btn-primary">Search</button>
+	  	</form>
+		
 	</ul>
 </nav>
+
+<section>
+		<c:choose>
+			<c:when test="${BODY == 'PRO-LIST'}" >
+				<%@ include file="/WEB-INF/views/users/user_product_list.jsp"  %>
+			</c:when>
+			<c:when test="${BODY == 'PRO-VIEW'}" >
+				<%@ include file="/WEB-INF/views/users/user_product_detail.jsp"  %>
+			</c:when>
+		</c:choose>	
+	</section>
 
 </body>
 </html>
