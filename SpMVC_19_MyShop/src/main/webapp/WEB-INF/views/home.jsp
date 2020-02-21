@@ -43,7 +43,7 @@ $(function(){
 <header class="jumbotron text-center">
 	<h3>MY SHOP</h3>
 </header>
-<nav class="navbar navbar-expand-sm bg-light d-flex">
+<nav class="navbar navbar-expand-sm bg-dark d-flex">
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="${rootPath}/">HOME</a></li>
 		
@@ -54,7 +54,7 @@ $(function(){
 		</sec:authorize>	
 		
 		<sec:authorize access="isAuthenticated()" >
-			<form id="logout" method="POST" action="${rootPath}/auth/logout">
+			<form id="logout" method="POST" action="${rootPath}/logout">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<li class="nav-item"><a href="#" class="nav-link logout">Sign Out</a></li>
 			</form>
@@ -77,7 +77,7 @@ $(function(){
 			<c:when test="${BODY == 'PRO-LIST'}" >
 				<%@ include file="/WEB-INF/views/users/user_product_list.jsp"  %>
 			</c:when>
-			<c:when test="${BODY == 'PRO-VIEW'}" >
+			<c:when test="${BODY == 'PRO-DETAIL'}" >
 				<%@ include file="/WEB-INF/views/users/user_product_detail.jsp"  %>
 			</c:when>
 		</c:choose>	

@@ -18,7 +18,7 @@ public class HomeController {
 		
 		log.debug("홈컨트롤러");
 		
-		return "home";
+		return "redirect:/user/product/list";
 	}
 	
 }

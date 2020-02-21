@@ -35,13 +35,13 @@ public class AuthController {
 		return "join";
 	}
 	
-	// @ResponseBody
+//	@ResponseBody
 	@RequestMapping(value="/login_ok", method=RequestMethod.GET)
-	public CustomUserDetails login_ok() {
+	public String login_ok() {
 		CustomUserDetails cUserDetails = (CustomUserDetails)SecurityContextHolder
 				.getContext().getAuthentication().getDetails();
 		
-		return cUserDetails;
+		return "redirect:/user/product/list";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
