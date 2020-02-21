@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 <script>
 $(function(){
-	$(".product-list").click(function(){
+	$(".btn-detail").click(function(){
 		document.location.href = "${rootPath}/user/product/detail/" + $(this).data("id")
 	})
 })
@@ -12,45 +12,52 @@ $(function(){
 </script>
 
 <style>
- tr td{
+.btn-detail{
  	cursor: pointer;
  }
- 
- .table-view {
+
+ .list-top{
  	padding-top: 3rem;
- 	width: 90%;
- 	margin: 0 auto;
  }
 
 </style>
 
-<section>
-	<div class="table-view">
-		<table class="table table-hover" id="viewtable">
-			<thead class="thead-dark">
-				<tr>
-					<th>NO</th>
-					<th>상품명</th>
-					<th>가격</th>
-				</tr>
-			</thead>	
+<!-- Page Content -->
+	<div class="container list-top">
+		<!-- Page Features -->
+		<div class="row text-center">
+			<c:forEach var="PVO" items="${PLIST}" varStatus="i">
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="card h-100">
+						<img class="card-img-top" src="http://placehold.it/500x325" alt="">
+						<div class="card-body">
+							<h4 class="card-title">${PVO.p_name}</h4>
+							<div>
+								<c:choose>
+									<c:when test="${empty PLIST}">
+										<tr>
+											<td colspan="6">상품 정보가 없습니다.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
 
-			<c:choose>
-					<c:when test="${empty PLIST}">
-						<tr>
-							<td colspan="3">데이터가 없음</td>
-						</tr>
-					</c:when>
-					<c:otherwise>
-						<c:forEach items="${PLIST}" var="PVO" varStatus="in">
-							<tr class="content-body product-list" data-id="${PVO.id}">
-								<td>${in.index}</td>
-								<td>${PVO.p_name}</td>
-								<td>${PVO.p_oprice}</td>
-							</tr>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-			</table>
-		</div>	
-</section>
+										<div class="B2C_LIST" >
+											<div>${PVO.p_oprice}원</div>
+										</div>
+
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="card-footer">
+							<button data-id="${PVO.id}" class="btn basket btn-primary btn-detail">보러만 가기</button>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container -->

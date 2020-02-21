@@ -39,11 +39,7 @@ $(function(){
 
 </head>
 <body>
-
-<header class="jumbotron text-center">
-	<h3>MY SHOP</h3>
-</header>
-<nav class="navbar navbar-expand-sm bg-dark d-flex">
+<nav class="navbar navbar-expand-sm bg-dark d-flex fixed-top position-sticky">
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="${rootPath}/">HOME</a></li>
 		

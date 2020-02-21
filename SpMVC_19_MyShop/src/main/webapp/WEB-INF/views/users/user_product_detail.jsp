@@ -53,7 +53,6 @@ p{
 				<hr />
 			</div>
 			<table>
-				<cation>
 				<tbody>
 					<tr>
 						<th>판매가</th>
@@ -73,7 +72,6 @@ p{
 							href="#a">감소</a></td>
 					</tr>
 				</tbody>
-				</cation>
 			</table>
 			<hr/>
 			<div class="btn-box">
