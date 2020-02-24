@@ -69,6 +69,10 @@ tr, td, th {
 			<c:when test="${BODY == 'DEPT'}" >
 				<%@ include file="/WEB-INF/views/admin/dept.jsp"  %>
 			</c:when>
+			<c:otherwise>
+				<h3>카트 상품 : ${COUNT_CART}</h3>
+				<h3>배송중 상품 : ${COUNT_DELIVERY}</h3>
+			</c:otherwise>
 		</c:choose>	
 	</section>
 	

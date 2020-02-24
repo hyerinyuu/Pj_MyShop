@@ -42,10 +42,12 @@ $(function(){
 <nav class="navbar navbar-expand-sm bg-dark d-flex fixed-top position-sticky">
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="${rootPath}/">HOME</a></li>
-		
+	</ul>	
+	
+	<ul class="navbar-nav ml-auto">	
 		<!--  로그인이 되지 않았을때만 로그인 메뉴 보이기(로그인 된 상태면 안보임) -->
 		<sec:authorize access="isAnonymous()">
-			<li class="nav-item"><a class="nav-link" href="${rootPath}/auth/login">SignIn</a></li>
+			<li class="nav-item ml-auto"><a class="nav-link" href="${rootPath}/auth/login">SignIn</a></li>
 			<li class="nav-item"><a class="nav-link" href="${rootPath}/auth/join">SignUp</a></li>
 		</sec:authorize>	
 		
@@ -55,29 +57,33 @@ $(function(){
 				<li class="nav-item"><a href="#" class="nav-link logout">Sign Out</a></li>
 			</form>
 		</sec:authorize>
+		
+		<li class="nav-item"><a class="nav-link" href="${rootPath}/user/product/cart_view">CART</a></li>
 
 		<sec:authorize access="hasRole('ADMIN')">
 			<li class="nav-item"><a class="nav-link" href="${rootPath}/admin/">ADMIN</a></li>
 		</sec:authorize>
 		
-		<form class="form-inline ml-auto" action="#">
+		<form class="form-inline" action="#">
 	    	<input class="form-control mr-sm-2" placeholder="Search">
-	    	<button class="btn btn-primary">Search</button>
 	  	</form>
 		
 	</ul>
 </nav>
 
-<section>
-		<c:choose>
-			<c:when test="${BODY == 'PRO-LIST'}" >
-				<%@ include file="/WEB-INF/views/users/user_product_list.jsp"  %>
-			</c:when>
-			<c:when test="${BODY == 'PRO-DETAIL'}" >
-				<%@ include file="/WEB-INF/views/users/user_product_detail.jsp"  %>
-			</c:when>
-		</c:choose>	
-	</section>
+<section class="container">
+	<c:choose>
+		<c:when test="${BODY == 'PRO-LIST'}" >
+			<%@ include file="/WEB-INF/views/users/user_product_list.jsp"  %>
+		</c:when>
+		<c:when test="${BODY == 'PRO-DETAIL'}" >
+			<%@ include file="/WEB-INF/views/users/user_product_detail.jsp"  %>
+		</c:when>
+		<c:when test="${BODY == 'CART_VIEW'}" >
+			<%@ include file="/WEB-INF/views/users/cart_view.jsp"  %>
+		</c:when>
+	</c:choose>	
+</section>
 
 </body>
 </html>
