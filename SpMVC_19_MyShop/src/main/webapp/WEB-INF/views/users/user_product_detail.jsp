@@ -107,7 +107,7 @@ $(function(){
 					</tr>
 					<tr>
 						<th>구매수량</th>
-						<td><input type="number" id="p_qty" name="p_qty" min=0 value="0"></td>
+						<td><input type="number" id="p_qty" name="p_qty" min=0 value="1"></td>
 					</tr>
 				</tbody>
 			</table>

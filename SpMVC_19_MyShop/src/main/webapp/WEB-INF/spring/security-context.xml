@@ -103,7 +103,7 @@
 						 
 						 authentication-failure-url="/auth/login?error"
 						 
-						 default-target-url="/auth/login_ok"
+						 default-target-url="/"
 						 username-parameter="username"
 						 password-parameter="password"/>
 						 
