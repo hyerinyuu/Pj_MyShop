@@ -13,6 +13,11 @@ $(function(){
 		document.location.href="${rootPath}/insert"
 	})
 	
+	$(".bbs-list tr").click(function(){
+		let id = $(this).data("id")
+		document.location.href="${rootPath}/detail?b_id=" + id
+	})
+	
 })
 
 </script>
@@ -20,20 +25,21 @@ $(function(){
 <%@ include file="/WEB-INF/views/include/include-header.jspf" %>
 	<section class="container-fluid">
 		<article>
-			<table class="table table-striped table-hover">
+			<table class="table table-striped table-hover bbs-list">
 				<tr>
 					<th>NO</th>
 					<th>작성자</th>
 					<th>일시</th>
 					<th>제목</th>
 				</tr>
-				
-				<tr>
-					<td>NO</td>
-					<td>작성자</td>
-					<td>일시</td>
-					<td>제목</td>
+				<c:forEach items="${BBS_List}" var="BBS" varStatus="i" >
+				<tr data-id="${BBS.b_id}">
+					<td>${i.count}</td>
+					<td>${BBS.b_writer}</td>
+					<td>${BBS.b_date_time}</td>
+					<td><a href="${rootPath}/update?b_id=${BBS.b_id}">${BBS.b_subject}</a></td>
 				</tr>					
+				</c:forEach>
 			</table>
 		</article>
 		

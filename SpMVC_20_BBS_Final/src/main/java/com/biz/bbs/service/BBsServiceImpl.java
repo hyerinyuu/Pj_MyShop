@@ -1,7 +1,8 @@
 package com.biz.bbs.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.biz.bbs.dao.BBsDao;
@@ -23,26 +24,32 @@ public class BBsServiceImpl implements BBsService{
 
 	@Override
 	public BBsVO findById(long b_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return bbsDao.findById(b_id);
 	}
 
 	@Override
 	public int insert(BBsVO bbsVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		// 작성일자를 현재 저장하는 날짜로 세팅
+		LocalDateTime ldt = LocalDateTime.now();
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
+		bbsVO.setB_date_time(ldt.format(df).toString());
+		return bbsDao.insert(bbsVO); 
 	}
 
 	@Override
 	public int delete(long b_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bbsDao.delete(b_id);
 	}
 
 	@Override
 	public int update(BBsVO bbsVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		// 작성일자를 현재 저장하는 날짜로 세팅
+		LocalDateTime ldt = LocalDateTime.now();
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
+		bbsVO.setB_date_time(ldt.format(df).toString());
+		return bbsDao.update(bbsVO);
 	}
 
 	@Override
