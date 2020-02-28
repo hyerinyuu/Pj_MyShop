@@ -16,12 +16,35 @@
 		<property name="password" value="bbsfinal" />
 	</bean>
 	
-	<!--  mapperLocations : xml mapper를 사용하기 위한 설정 -->
-	<!--  typeAliases Package : vo 클래스를 자동으로 type 설정하기 위함-->
+	<!--  * mapperLocations : xml mapper를 사용하기 위한 설정 -->
+	
+	<!--  * typeAliases Package : vo 클래스를 자동으로 type 설정하기 위함-->
+	
+	<!--  * jdbcTypeForNull : NOT NULL 설정을 해둔 칼럼에 데이터가 입력되지 않으면
+		  부적절한 열유형 1111 Exception이 계속 발생하는데, 
+		  이러한 Exception을 방지하기 위한 jdbcType=VARCHAR등의 속성을 칼럼마다 추가해 주지 않아도
+		  jdbyTypeForNull 속성값을 VARCHAR로 해주면 자동으로 추가되는 기능-->
+		  
+	<!--  * mapUnderscoreToCamelCase : 테이블의 칼럼이름은 snake-case로 작성하고
+			vo 클래스의 필드변수는 Camel-case로 작성했을 때
+			이름 자동변환을 통해 table과 연동되게 하는 옵션이다.
+			우리 프로젝트는 vo클래스 필드변수를 snake-case로 작성하고 
+			이 옵션을 false로 설정해둔다. 기본값은 false	-->		  
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="oracleds"/>
 		<property name="mapperLocations" value="/WEB-INF/spring/mybatis/mapper/*-mapper.xml" />
 		<property name="typeAliasesPackage" value="com.biz.bbs.domain" />
+		<property name="configuration">
+			<bean class="org.apache.ibatis.session.Configuration">
+				<property name="jdbcTypeForNull" value="VARCHAR"/>
+				<property name="mapUnderscoreToCamelCase" value="false"/>
+				
+				<property name="cacheEnabled" value="true" />
+				<property name="defaultExecutorType" value="REUSE" />
+				<property name="logPrefix"  value="My-Batis"/>
+			</bean>
+		
+		</property>
 	</bean>
 	
 	<!--  transaction 자동화 설정 -->
@@ -31,6 +54,6 @@
 		<property name="dataSource" ref="oracleds" />
 	</bean>
 
-	<mybatis-spring:scan base-package="com.biz.bbs.dao"/>
+	<mybatis-spring:scan base-package="com.biz.bbs.repository"/>
 
 </beans>

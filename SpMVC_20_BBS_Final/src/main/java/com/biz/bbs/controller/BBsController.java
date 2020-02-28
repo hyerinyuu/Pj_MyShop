@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.CommentVO;
 import com.biz.bbs.service.BBsService;
+import com.biz.bbs.service.CommentService;
 import com.biz.bbs.service.FileService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
+@RequiredArgsConstructor
 @Slf4j
 @Controller
 public class BBsController {
@@ -38,11 +41,11 @@ public class BBsController {
 	 * -- 응집도 : 
 	 * ※※※※ 결합도는 낮게 응집도는 높은 모듈간 연계가 좋은 설계임
 	 */
-	@Autowired
-	private BBsService bbsService;
+	private final BBsService bbsService;
 	
-	@Autowired
-	private FileService fileService;
+	private final FileService fileService;
+	
+	private final CommentService cmtService;
 	
 	
 	/*
@@ -52,7 +55,7 @@ public class BBsController {
 	 * bbs_lsit.jsp와 rendering하도록 수행한다. 
 	 */
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model, String c_b_id) {
 		List<BBsVO> bbsList = bbsService.selectAll();
 		model.addAttribute("BBS_List", bbsList);
 		
@@ -70,7 +73,10 @@ public class BBsController {
 	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
 	public String detail(@RequestParam("b_id") String b_id, Model model) {
+		
+		this.commentList(b_id, model);
 		BBsVO bbsVO = bbsService.findById(Long.valueOf(b_id));
+		
 		model.addAttribute("BBS", bbsVO);
 		return "bbs_detail";
 	}
@@ -154,6 +160,10 @@ public class BBsController {
 		return returnFileName;
 	}
 	
-	
+	private List<CommentVO> commentList(String b_id, Model model){
+		List<CommentVO> cmtList = cmtService.findByBId(Long.valueOf(b_id));
+		model.addAttribute("CMT_LIST", cmtList);
+		return cmtList;
+	}
 	
 }
