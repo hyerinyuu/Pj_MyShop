@@ -5,28 +5,39 @@
   
  <mapper namespace="com.biz.bbs.repository.CommentDao">
  
- 	<insert id="insert" parameterType="cmtVO">
- 		INSERT INTO tbl_comment(
-			C_ID,
-			C_P_ID,
-			C_B_ID,
-			C_DATE_TIME,
-			C_WRITER,
-			C_SUBJECT
- 		)VALUES(
- 			SEQ_COMMENT.NEXTVAL,
-			#{c_p_id},
-			#{c_b_id},
-			#{c_date_time},
-			#{c_writer},
-			#{c_subject})
- 	</insert>
- 	
- 	<update id="update" parameterType="cmtVO">
- 	 	UPDATE tbl_comment SET
-			C_WRITER = #{c_writer},
-			C_SUBJECT = #{c_subject}
-		WHERE C_ID = #{c_id} 	 	
- 	</update>
+ 	<select id="findByBIdLevel" resultType="commentVO">
+	 	SELECT c_id, c_p_id, c_b_id, c_writer,
+		LPAD('re : ', (LEVEL-1) *5, 're : ') || c_subject AS c_subject
+		FROM tbl_comment
+		WHERE c_b_id = #{c_b_id}
+		START WITH c_p_id = 0
+		CONNECT BY PRIOR c_id = c_p_id
+		ORDER SIBLINGS BY c_p_id
+ 	</select>
  
+ 	<insert id="insert" parameterType="commentVO">
+ 			INSERT INTO tbl_comment(
+					C_ID,
+					C_B_ID,
+					C_P_ID,
+					C_DATE_TIME,
+					C_WRITER,
+					C_SUBJECT
+			) VALUES (				
+				SEQ_COMMENT.NEXTVAL,
+				#{c_b_id},
+				#{c_p_id},
+				#{c_date_time},
+				#{c_writer},
+				#{c_subject} 			
+			)
+ 	
+ 	</insert>
+ 	<update id="update" parameterType="commentVO">
+		 	UPDATE tbl_comment SET
+				C_WRITER = #{c_writer},
+				C_SUBJECT = #{c_subject}
+			WHERE
+		 		c_id = #{c_id}
+ 	</update>
  </mapper> 

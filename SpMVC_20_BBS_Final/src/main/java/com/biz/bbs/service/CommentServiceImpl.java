@@ -11,11 +11,15 @@ import com.biz.bbs.repository.CommentDao;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-@Service
-public class CommentServiceImpl implements CommentService{
+@Service("cmtV1")
+public class CommentServiceImpl implements CommentService {
 
-	private final CommentDao cmtDao;
+	protected final CommentDao cmtDao;
+
+	public CommentServiceImpl(CommentDao cmtDao) {
+		super();
+		this.cmtDao = cmtDao;
+	}
 
 	@Override
 	public List<CommentVO> selectAll() {
@@ -25,28 +29,47 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public CommentVO findById(long c_id) {
-		return cmtDao.findById(c_id);
+
+		CommentVO cmtVO = cmtDao.findById(c_id);
+		return cmtVO;
+	
 	}
 
-	@Override
-	public List<CommentVO> findByBId(long c_b_id) {
-		return cmtDao.findByBId(c_b_id);
-	}
-	
 	@Override
 	public List<CommentVO> findByPId(long c_p_id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CommentVO> cmtList = cmtDao.findByPId(c_p_id); 
+		return cmtList;
 	}
 
+	/*
+	 * 게시판 원글에 대한 코멘트 리스트 가져오기
+	 */
+	@Override
+	public List<CommentVO> findByBId(long c_b_id) {
+		List<CommentVO> cmtList = cmtDao.findByBId(c_b_id); 
+		return cmtList;
+	}
+
+	
 	@Override
 	public int insert(CommentVO commentVO) {
+		if(commentVO.getC_id() > 0) {
 		
-		LocalDateTime ldt = LocalDateTime.now();
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
-		commentVO.setC_date_time(ldt.format(df).toString());
+			int ret = cmtDao.update(commentVO);
+			return ret;
 		
-		return cmtDao.insert(commentVO);
+		} else {
+			
+			// 작성일자를 현재 저장하는 날짜로 세팅을 하자
+			LocalDateTime ldt = LocalDateTime.now();
+			DateTimeFormatter df 
+				= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			
+			commentVO.setC_date_time(ldt.format(df));
+			int ret = cmtDao.insert(commentVO);
+			return ret;
+			
+		}
 	}
 
 	@Override
@@ -57,9 +80,7 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public int delete(long c_id) {
-		return cmtDao.delete(c_id);
+		int ret = cmtDao.delete(c_id);
+		return ret;
 	}
-
-	
-
 }
