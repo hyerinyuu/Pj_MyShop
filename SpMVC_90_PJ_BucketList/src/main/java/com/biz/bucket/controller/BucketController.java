@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.biz.bucket.domain.BucketVO;
 import com.biz.bucket.service.BucketService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class BucketController {
 	
@@ -31,9 +34,10 @@ public class BucketController {
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String insert(@ModelAttribute BucketVO bkVO) {
 		
+		log.debug("insert값 : " + bkVO.toString());
 		int ret = bkService.insert(bkVO);
 		
-		return "redirect:/bucket/list";
+		return "redirect:/list";
 		
 	}
 	
@@ -41,7 +45,24 @@ public class BucketController {
 	public String update(@ModelAttribute BucketVO bkVO) {
 		
 		int ret = bkService.update(bkVO);
-		return "redirect:/bucket/list";
+		return "redirect:/list";
+	}
+	
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public String delete(String id) {
+		
+		log.debug("####삭제 id값 : " + id);
+		
+		int ret = bkService.delete(id);
+		return "redirect:/list";
+		
+	}
+	
+	@RequestMapping(value="/compStateUpdate", method=RequestMethod.POST)
+	public String compStateUpdate(String id) {
+		
+		bkService.compStateUpdate(id);
+		return "redirect:/list";
 	}
 	
 	

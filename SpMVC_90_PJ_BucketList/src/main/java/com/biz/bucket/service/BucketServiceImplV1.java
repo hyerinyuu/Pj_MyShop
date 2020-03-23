@@ -27,7 +27,7 @@ public class BucketServiceImplV1 implements BucketService{
 	}
 
 	@Override
-	public BucketVO findBySeq(long bkSeq) {
+	public BucketVO findBySeq(long bk_seq) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,20 +62,27 @@ public class BucketServiceImplV1 implements BucketService{
 
 	@Override
 	public int update(BucketVO bucketVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bkDao.update(bucketVO);
 	}
 
 	@Override
-	public int delete(long bkSeq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(String id) {
+		return bkDao.delete(Long.valueOf(id));
 	}
 
 	@Override
-	public int complete(long bkSeq, String bkComplete) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void compStateUpdate(String id) {
+
+		BucketVO bkVO = bkDao.findById(Long.valueOf(id));
+		
+		if(bkVO.getBk_complete().equalsIgnoreCase("N")) {
+			bkVO.setBk_complete("Y");
+		}else {
+			bkVO.setBk_complete("N");
+		}
+		
+		bkDao.compStateUpdate(bkVO);
+		
 	}
 
 }

@@ -6,7 +6,12 @@
  <mapper namespace="com.biz.bucket.repository.BucketDao">
  
  	<select id="selectAll" resultType="bucketVO">
+ 		SELECT * FROM tbl_bucket_list ORDER BY BK_SEQ ASC
+ 	</select>
+ 	
+ 	<select id="findById" resultType="bucketVO">
  		SELECT * FROM tbl_bucket_list
+ 		WHERE BK_SEQ = #{bk_seq}
  	</select>
  	
  	<insert id="insert" parameterType="bucketVO">
@@ -18,7 +23,7 @@
 			BK_TIME,
 			BK_COMPLETE
  		)VALUES(
- 			#{bk_seq},
+ 			SEQ_BUCKET.NEXTVAL,
 			#{bk_subject},
 			#{bk_text},
 			#{bk_date},
@@ -26,5 +31,26 @@
 			#{bk_complete}
  		)
  	</insert>
+ 	
+ 	<update id="update" parameterType="bucketVO">
+ 		UPDATE tbl_bucket_list 
+	 		SET
+				BK_SUBJECT = #{bk_subject},
+				BK_TEXT = #{bk_text}
+		WHERE BK_SEQ = #{bk_seq}	
+ 		
+ 	</update>
+ 	
+ 	<update id="compStateUpdate" parameterType="bucketVO">
+ 		UPDATE tbl_bucket_list
+ 		SET
+ 			BK_COMPLETE = #{bk_complete}
+ 		WHERE BK_SEQ = #{bk_seq}	
+ 	</update>
+ 	
+ 	<delete id="delete" parameterType="bucketVO">
+ 		DELETE tbl_bucket_list
+ 		WHERE BK_SEQ = #{bk_seq}
+ 	</delete>
  
  </mapper> 
