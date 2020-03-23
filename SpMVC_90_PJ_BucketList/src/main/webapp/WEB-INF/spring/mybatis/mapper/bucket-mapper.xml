@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.biz.bucket.repository.BucketDao">
+ 
+ 	<select id="selectAll" resultType="bucketVO">
+ 		SELECT * FROM tbl_bucket_list
+ 	</select>
+ 	
+ 	<insert id="insert" parameterType="bucketVO">
+ 		INSERT INTO tbl_bucket_list(
+	 		BK_SEQ,
+			BK_SUBJECT,
+			BK_TEXT,
+			BK_DATE,
+			BK_TIME,
+			BK_COMPLETE
+ 		)VALUES(
+ 			#{bk_seq},
+			#{bk_subject},
+			#{bk_text},
+			#{bk_date},
+			#{bk_time},
+			#{bk_complete}
+ 		)
+ 	</insert>
+ 
+ </mapper> 
