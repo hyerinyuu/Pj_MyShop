@@ -22,10 +22,5 @@
 	<%@include file="/WEB-INF/views/include/include-header.jsp" %>
 </header>
 <%@ include file="/WEB-INF/views/bucket/bk_list.jsp" %>	
-<c:choose>
-	<c:when test="${BODY == 'LIST'}">
-	</c:when>
-</c:choose>
-
 </body>
 </html>

@@ -14,8 +14,8 @@
 	<bean id="oracleDS" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="bbs" />
-		<property name="password" value="bbs" />
+		<property name="username" value="iouser" />
+		<property name="password" value="iouser" />
 	</bean>
 
 	<!-- * mapperLocations : xml mapper를 사용하기 위한 설정 -->

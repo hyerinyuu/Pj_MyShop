@@ -22,7 +22,7 @@ $(document).ready(function(){
 		    </li>
 		  
 		    <li class="nav-item">
-		      <a class="nav-link" href="${rootPath}/bucket/list">BucketList</a>
+		      <a class="nav-link" href="${rootPath}/list">BucketList</a>
 		    </li>
 	  </ul>	 
 	  
