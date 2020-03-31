@@ -2,8 +2,10 @@ package com.biz.modeles.service;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -11,6 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.biz.modeles.domain.UsersVO;
 
 
+// 이름순으로 오름차순으로 실행하라
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
 		locations = {"file:src/main/webapp/WEB-INF/spring/appServlet/*-context.xml"}
@@ -21,7 +25,7 @@ public class UserServiceTest {
 	UserService userService;
 
 	@Test
-	public void UserServiceTest() {
+	public void c_getUserTest() {
 		
 		UsersVO usersVO = userService.getUser("admin");
 		assertEquals(usersVO.getUserId(), "admin");
@@ -39,7 +43,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void insertTest() {
+	public void b_insertTest() {
 		
 //		UsersVO usersVO = UsersVO.builder().userId("korea").password("12345").userName("대한민국").userRole("gov").build();
 		
@@ -57,7 +61,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void deleteTest() {
+	public void a_deleteTest() {
 		int ret = userService.delete("admin");
 		ret = userService.delete("guest");
 		ret = userService.delete("dba");
