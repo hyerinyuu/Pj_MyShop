@@ -16,7 +16,7 @@
 
 <script>
 
-	var socket = new SockJS('http://localhost:8080/socket/chat');
+	var socket = new SockJS('http://192.168.4.12:8080/socket/chat');
 	// socket서버에 접속 시작하라
 	socket.onopen = function() {
 		
@@ -51,12 +51,17 @@
 	    	return false;
 	    }
 		
-		alert(mJson.msg)
+		// alert(mJson.msg)
 		if(mJson.msg && mJson.msg == 'userList'){
 			
 			// alert(mJson.userList)
 			
 			let userList = JSON.parse(mJson.userList)
+			
+			// 사용자가 추가될때마다 리스트가 반복되어서 리스트를 모두 비우고 
+			$("#toList").empty()
+			
+			// 다시 전체 사용자 리스트 추가
 			$("#toList").append(
 				// 동적 tag를 만드는 jquery코드
 				$("<option/>", 
@@ -81,18 +86,25 @@
 					// 동적 tag를 만드는 jquery 코드
 					$("<option/>",
 					{
-						value:userList[userListKeys[i]].userName,
+						// value부분에 session아이디가 추가
+						value:userListKeys[i],
 						text:userList[userListKeys[i]].userName
 					})
 				)
 				
 			}
+			// return false를 해주지 않으면 사용자를 추가할때마다 
+			// 메시지/username이 수신되어 undefined로 뜸 
+			return false;
 			
 		}
 	    
-	    let html = "<div class='form text-right'>" + "<span class='userName'>" + mJson.userName + " >> " + "</span>" + mJson.message + "</div>"
+	    let html = "<div class='from col-6 text-left'>" + "<span class='userName'>" + mJson.userName + " >> " + "</span>" + mJson.message + "</div>"
 	    
 	    $("#message_list").append(html)
+	    $("#message_list").scrollTop(
+			$("#message_list").prop('scrollHeight')		
+		)
 	    // sock.close();
 	};
 	
@@ -111,7 +123,12 @@
 			// socket.send(message)
 		})
 		
+		
 		 $(document).on("click","#btn_send",function(){
+			 
+			let toUserId = $("#toList").val()
+			let toUserName = $("#toList option:checked").text()
+			 
 			let userName = $("#userName").val()
 			
 			if(userName == ""){
@@ -121,18 +138,24 @@
 			// userName과 message를 묶어서 JSON데이터로 생성
 			let message = {
 					userName : userName,
+					toUser : toUserId,
 					message : $("#message").val()
 			}
 			
-			let html = "<div class='to'>" + "<span class='userName'>" +  "나 >> " + "</span>" + message.message + "</div>"
+			let html = "<div class='to text-right'>" + "<span class='userName'>" +  "나 >> " + "</span>" + message.message 
+				html += "<span>(" + toUserName + ")<span>" + "</div>"
+				
 			$("#message_list").append(html)
+			$("#message_list").scrollTop(
+				$("#message_list").prop('scrollHeight')		
+			)
 			
 			// socket을 통해 json 데이터를 보내기 위해
 			// json형 문자열로 변환시킨 후 전송
 			socket.send(JSON.stringify(message))
 			$("#message").val("")
 		 })
-		 socket.send("getUserList")
+		 // socket.send("getUserList")
 		
 	})
 
@@ -142,19 +165,28 @@
 
 #chat-box{
 	border: 1px solid black;
-	height: 500px;
+	height: 70vh;
 	width : 500px;
 	overflow: auto;
 }
 
 .from, .to {
 	padding : 7px;
+	margin-bottom: 2rem;
+}
+.to {
+	margin: 0 0 32px 210px;
 }
 
 .userName {
 	color : blue;
 	font-weight: bold;
 	font-style: italic;
+}
+#message_list{
+	border : 1px solid red;
+	height: 45vh;
+	overflow: auto;
 }
 
 </style>
@@ -163,39 +195,37 @@
 	<h2 class="text-white"> MY CHATTING SERVICE</h2>
 </header>
 
+
+<br/>
+<br/>
 <section id="chat-box" class="container-fluid">
+
+	<br/>
 	<p>Have Fun!</p>
 	<hr/>
-	<div id="user_list" class="col-3">
-				
+
+	<div id="message_list" ></div>
+	
+	
+	<div>
+		<form>
+			<div class="form-group">
+				<input type="hidden" id="userName" class="form-control" placeholder="보내는 사람"><br/>
+			</div>
+			
+			<div class="form-inline">
+				<select id="toList" class="form-control col-3">
+						<option value="all">전체</option>
+				</select>
+				<input id="message"  class="form-control col-7" placeholder="메시지를 입력하세요">
+				<button id="btn_send" class="btn btn-primary col-2">전송</button>
+			</div>
+			
+		</form>
 	</div>
-	<div id="message_list" class="col-8">
-		
-	</div>
+	
 </section>
 
-<section class="container-fluid">
-	<form>
-		<div class="form-group">
-			<label for="userName">From</label>
-			<input id="userName" class="form-control" placeholder="보내는 사람"><br/>
-		</div>
-		
-		<div class="form-group">
-			<label for="toList">받는사람</label>
-			<select id="toList" class="form-controll">
-				<option value="all">전체</option>
-			</select>
-			
-		</div>
-		
-		<div class="form-group">
-			<label for="message">메시지</label>
-			<input id="message"  class="form-control" placeholder="메시지를 입력하세요">
-		</div>
-		<button id="btn_send" class="btn btn-primary">전송</button>
-	</form>
-</section>
 
 
 

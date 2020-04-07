@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.ws.Response;
+
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -56,7 +59,7 @@ public class ChatController extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// TODO Auto-generated method stub
 		super.afterConnectionEstablished(session);
-		
+
 		/*
 		 * 최초 어떤 사용자가 접속하면
 		 * 사용자에 대한 메시지 정보를 담을 변수 초기화
@@ -152,15 +155,35 @@ public class ChatController extends TextWebSocketHandler {
 		
 		// gson을 사용하여 문자열형 JSON데이터를 VO로 변환
 		MessageVO messageVO = gson.fromJson(message.getPayload(), MessageVO.class);
+		
 		String sendMessage = String.format("%s (으)로부터 : %s", messageVO.getUserName(), messageVO.getMessage());
 
 		// TextMessage sendTextMessage = new TextMessage(sendMessage);
 
 		// jackson Bind의 클래스인 ObjectMapper를 사용하여
 		// VO클래스를 JSON형 문자열로 바로 변환시키기
-
 		String jSonTextMessage = objMapper.writeValueAsString(messageVO);
-		this.sendNotMeMessage(session, jSonTextMessage);
+		
+		
+		// select가 All이면
+		if(messageVO.getToUser().equalsIgnoreCase("ALL")) {
+			// 나를 제외한 전체에게 메시지 보내기
+			this.sendNotMeMessage(session, jSonTextMessage);
+		
+		// select가 전체가 아니면
+		}else {
+			
+			// 전송된 session id값을 sessionList에서 조회하여 일치하는 값이 있으면
+			// 해당 접속자에게만 메시지 보내기
+			for(WebSocketSession ws : sessionList) {
+				if(ws.getId().equals(messageVO.getToUser())) {
+					this.sendMeMessage(ws, jSonTextMessage);
+					 break;
+				}
+			}
+		}
+			
+		
 	}
 
 	
@@ -201,15 +224,21 @@ public class ChatController extends TextWebSocketHandler {
 		}
 	}
 
-	// 새로고침하면 socket이 close되는 현상 발생
-	// session에 리스트가 들어있는데 새로고침을 해서
-	// session에 남아있는 정보 삭제
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// TODO Auto-generated method stub
 		super.afterConnectionClosed(session, status);
 
+		// 새로고침을 하면 session이 끊기는데
+		// 서버에는 session정보가 남아있어서 새로고침 후 메시지를 보내려고 시도하면 
+		// 끊긴 session에 메시지를 보내려고 시도해 오류가 나 connection이 close됨
+		// 그래서 서버의 session도 지워줘야 새로고침을 해도 오류가 나지 않음
 		sessionList.remove(session);
+		
+		
+		// userList에 값이 계속 추가되어 empty로 비워줬지만 map에도 계속 사용자 리스트가 추가되는 상황이므로
+		// map도 id값을 받아서 지워줘야함
+		messageMap.remove(session.getId());
 
 	}
 
