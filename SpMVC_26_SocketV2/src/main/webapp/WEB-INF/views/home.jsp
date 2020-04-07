@@ -25,8 +25,9 @@
 		// 창에서 esc를 누르면 null값이 입력됨
 		// == userName이 null값이 아니고 ""이 아니면
 		if(userName && userName != ""){
-			socket.send("userName:" + userName)	
+			socket.send("userName:" + userName)	// userName:홍길동(':'을 기준으로 문자열을 split했기때문에 띄어쓰면 안됨)
 		}
+		socket.send("getUserList:" + userName); 
 	    // console.log('open');
 	    
 	    // 얘를 안지우니까 illigalStatementException이 발생함
@@ -50,22 +51,44 @@
 	    	return false;
 	    }
 		
+		alert(mJson.msg)
 		if(mJson.msg && mJson.msg == 'userList'){
+			
+			// alert(mJson.userList)
+			
 			let userList = JSON.parse(mJson.userList)
-			
-			// 동적 tag를 만드는 jquery 코드 (== <div class="a", id="a", data-id="sample"></div> )
-			// +를 사용하지 않고 jquery를 사용한 동적코드(이 코드 자체가 하나의 tag가 됨)
-			// <option> + value="" + ~~~
-			let options = $("<option/>", {value:all, text:"전체"})
-			
-			for(let i = 0 ; i < userList.length ; i++){
-				options.append($("<option/>", 
-						{value:userList[i].userName, 
-						 text:userList[i].userName 
+			$("#toList").append(
+				// 동적 tag를 만드는 jquery코드
+				$("<option/>", 
+						{
+							value:"all", 
+							text:"전체"
 						})
-			)}
+							
+				  )	
+				  
+			// js코드 내장 객체 method
+			// userList 객체 그룹중에서 각 요소의 키값만 추출하여
+			// 배열로 만들어 달라
+			let userListKeys = Object.keys(userList)
+			
+			// 각 요소의 key값만 추출
+			for(let i = 0; i < userListKeys.length; i++){
+				// console.log(userListKeys[i])
+				console.log("키값에 따른 사용자 이름 : ", userList[userListKeys[i]].userName)
+				$("#toList").append(
+						
+					// 동적 tag를 만드는 jquery 코드
+					$("<option/>",
+					{
+						value:userList[userListKeys[i]].userName,
+						text:userList[userListKeys[i]].userName
+					})
+				)
+				
+			}
+			
 		}
-	    
 	    
 	    let html = "<div class='form text-right'>" + "<span class='userName'>" + mJson.userName + " >> " + "</span>" + mJson.message + "</div>"
 	    
