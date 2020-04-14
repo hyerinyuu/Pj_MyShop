@@ -92,5 +92,12 @@ public class UserService {
 		}
 		return false;
 	}
+
+	public UserDetailsVO findById(long id) {
+
+		UserDetailsVO userVO = userDao.findById(id);
+		
+		return userVO;
+	}
 	
 }

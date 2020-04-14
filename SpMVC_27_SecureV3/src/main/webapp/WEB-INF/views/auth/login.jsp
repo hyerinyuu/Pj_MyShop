@@ -15,11 +15,34 @@
 			document.location.href = "${rootPath}/user/join"
 			
 		})
+		
+		// checkbox 비밀번호 보이게 설정
+		// 현재 DOM화면에 class가 view_pass인 모든것에 적용하라
+		$(".view_pass").each(function(index,input){
+			// 매개변수로 전달된 input을 선택하여
+			// 변수 input_ref에 임시저장
+			let input_ref = $(input)
+			$("input#view_pass").click(function(){
+				let change = $(this).is(":checked")
+					? "text" : "password";
+				// 가상의 input 생성
+				// <input type='text'> 또는 <input type='password'>
+				let ref = $("<input  class='form-control' type='" + change + "'/>")
+					.val(input_ref.val())
+					.insertBefore(input_ref);
+				
+				// 앞에 있는 input 지우고 새로 입력하라
+				input_ref.remove();
+				input_ref = ref;
+				
+			})
+		})
+		
 	})
 
 </script>
 <style>
-.join-form{
+.login-form{
 	width : 700px;
 	border : 2px solid gray;
 	border-radius: 8px;
@@ -41,7 +64,7 @@
 }
 </style>
 <body>
-<div class="container join-form">
+<div class="container login-form">
   <h1 class="text-center login_text">LOGIN</h1>
   <form:form action="${rootPath}/login" method="POST">
     <div class="form-group">
@@ -59,7 +82,13 @@
     
     <div class="form-group">
       <label for="password">PASSWORD :</label>
-      <input class="form-control" type="password" id="password" name="password" placeholder="Enter password">
+      <input class="form-control view_pass" type="password" id="password" name="password" placeholder="Enter password">
+    </div>
+    
+    <div class="option">
+    	<label for="view_pass">
+    		<input type="checkbox" id="view_pass">비밀번호 보이기
+    	</label>
     </div>
     
     <button type="submit" class="btn btn-primary">LOGIN</button>

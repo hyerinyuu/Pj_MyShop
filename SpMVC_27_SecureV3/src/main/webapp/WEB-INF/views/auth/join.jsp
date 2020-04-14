@@ -65,6 +65,29 @@ $(function(){
 		})
 	})
 	
+	
+	// checkbox 비밀번호 보이게 설정
+	// 현재 DOM화면에 class가 view_pass인 모든것에 적용하라
+	$(".view_pass").each(function(index,input){
+		// 매개변수로 전달된 input을 선택하여
+		// 변수 input_ref에 임시저장
+		let input_ref = $(input)
+		$("input#view_pass").click(function(){
+			let change = $(this).is(":checked")
+				? "text" : "password";
+			// 가상의 input 생성
+			// <input type='text'> 또는 <input type='password'>
+			let ref = $("<input  class='form-control' type='" + change + "'/>")
+				.val(input_ref.val())
+				.insertBefore(input_ref);
+			
+			// 앞에 있는 input 지우고 새로 입력하라
+			input_ref.remove();
+			input_ref = ref;
+			
+		})
+	})
+	
 })
 
 </script>
@@ -74,13 +97,26 @@ $(function(){
 		color: red;
 		font-size: 1rem;
 	}
-
+	
+	.join_text{
+	font-size: 55px;
+	}
+	
+	.join-form{
+	width : 700px;
+	border : 2px solid gray;
+	border-radius: 8px;
+	padding: 3rem;
+	margin-top: 220px;
+	/* font-family: 'Playfair Display', serif;*/
+	font-family: 'Do Hyeon', sans-serif;
+}
 </style>
 
 <body>
 
-<div class="container">
-  <h2>JOIN</h2>
+<div class="container join-form">
+  <h2 class="text-center join_text">JOIN</h2>
   <!-- 
   <input class="form-control" type="text" name="${_csrf.parameterName}" value="${_csrf.token}">
    -->
@@ -93,15 +129,22 @@ $(function(){
     
     <div class="form-group">
       <label for="password">Password:</label>
-      <input class="form-control" type="password" id="password" name="password" placeholder="Enter password">
+      <input class="form-control view_pass" type="password" id="password" name="password" placeholder="Enter password">
       <div class="message" id="m_password"></div>
     </div>
     
     <div class="form-group">
       <label for="re_password">Recheck your Password:</label>
-      <input class="form-control" type="password" id="re_password" name="re_password" placeholder="Enter password">
+      <input class="form-control view_pass" type="password" id="re_password" name="re_password" placeholder="Enter password">
       <div class="message" id="m_repassword"></div>
     </div>
+    
+    <div class="option">
+    	<label for="view_pass">
+    		<input type="checkbox" id="view_pass">비밀번호 보이기
+		</label>
+    </div>
+    <br/>
     
     <button type="button" id="btn-join" class="btn btn-primary">JOIN</button>
     <button type="button" class="btn btn-danger join">Forgot Id or Password?</button>

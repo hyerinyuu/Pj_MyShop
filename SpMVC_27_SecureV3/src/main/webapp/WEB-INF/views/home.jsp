@@ -11,10 +11,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>나의 홈페이지</title>
 </head>
+<style>
+#sec-body{
+	border: 1px solid black;
+	height: 1200px;
+}
+</style>
 <body>
+<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">LOGIN</button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#join-modal">JOIN</button>
+<section id="sec-body">
 
+</section>
 </body>
 </html>

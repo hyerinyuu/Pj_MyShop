@@ -17,6 +17,8 @@ public interface UserDao {
 	
 	// vo를 만들지 않고 Map을 이용해 insert 수행해보기
 	public int insert(UserVO userVO);
+
+	public UserDetailsVO findById(long id);
 	
 	
 	
