@@ -27,7 +27,7 @@
 					? "text" : "password";
 				// 가상의 input 생성
 				// <input type='text'> 또는 <input type='password'>
-				let ref = $("<input  class='form-control' type='" + change + "'/>")
+				let ref = $("<input name='password' class='form-control' type='" + change + "'/>")
 					.val(input_ref.val())
 					.insertBefore(input_ref);
 				

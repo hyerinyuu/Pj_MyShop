@@ -37,7 +37,10 @@
 		<constructor-arg index="0" value="4"></constructor-arg>
 	</bean>
 	
-	<!-- login을 수행할 때 user DB로부터 사용자 정보 가져오기 설정 -->
+	<!-- login을 수행할 때 user DB로부터 사용자 정보 가져오기 설정 
+	
+		우리는 authorProvider를 사용했기 때문에 필요없는 코드임
+		
 	<bean id="secureDao" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
 		<property name="dataSource" ref="authDB"/>
 		<property name="usersByUsernameQuery">
@@ -55,6 +58,7 @@
 			</value>
 		</property>
 	</bean>
+	-->
 	
 	<!--  userprovider에게 인식시켜주는 절차 -->
 	<context:component-scan base-package="com.biz.sec.service.auth" />
@@ -136,7 +140,7 @@
 			logout-url="/logout"
 			invalidate-session="true"
 			delete-cookies="true"
-			logout-success-url=""/>
+			logout-success-url="/"/>
 			
 			
 	</security:http>

@@ -70,3 +70,14 @@ POST method방식은 서버로부터 전달받은 csrf Token을 데이터들과 
 	 
 * 형식의 form화면을 작성하면 spring form tag libs는 자동으로 csrf Token을 form 화면코드에 추가하여
 별도의 조치를 취하지 않아도 문제가 발생하지 않도록 만들어 준다.
+
+
+
+* include-nav.jspf에서 logout할 때 spring formtag를 사용하지 않으면
+따로 csrf token값을 같이 보내줘야 로그아웃이 수행된다.
+
+			spring form tag를 안 쓸 경우 csrf token값을 같이 보내줘야함
+			$.post("${rootPath}/logout", { ${_csrf.parameterName:"${_csrf.token"}, function(result){
+				alert(result)
+				document.location.replace("${rootPath}/")
+			})

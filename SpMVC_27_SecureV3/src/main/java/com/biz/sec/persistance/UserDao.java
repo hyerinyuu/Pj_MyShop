@@ -11,7 +11,7 @@ public interface UserDao {
 	
 	public void create_table(String create_table);
 	
-	@Select(" SELECT user_name AS username, user_pass AS password, enabled, email, phone, address "
+	@Select(" SELECT id, user_name AS username, user_pass AS password, enabled, email, phone, address "
 			+ " FROM tbl_users WHERE user_name = #{username} ")
 	public UserDetailsVO findByUserName(String username);
 	
@@ -19,6 +19,8 @@ public interface UserDao {
 	public int insert(UserVO userVO);
 
 	public UserDetailsVO findById(long id);
+
+	public int update(UserDetailsVO userVO);
 	
 	
 	

@@ -44,21 +44,21 @@ public class AuthenticationProviderImpl implements AuthenticationProvider{
 		// Service -> Dao를 통해서 DB로부터 사용자 정보 가져오기
 		// user정보에는 암호화된 값이 담겨있고
 		// password에는 암호화 되지 않는 값이 담겨있음
-		UserDetailsVO user = (UserDetailsVO) userDService.loadUserByUsername(username);
+		UserDetailsVO userVO = (UserDetailsVO) userDService.loadUserByUsername(username);
 		
 		// 암호화x비밀번호와 암호화o비밀번호를 비교
-		if(!passwordEncoder.matches(password, user.getPassword())) {
+		if(!passwordEncoder.matches(password.trim(), userVO.getPassword().trim())) {
 			throw new BadCredentialsException("비밀번호 오류");
 		}
 		
 		// enabled가 false이면 사용금지된 username
-		if(!user.isEnabled()) {
+		if(!userVO.isEnabled()) {
 			throw new BadCredentialsException(username + "접근권한 없음");
 		}
 		
 		// UserDetailsService에서 보내준 사용자 정보를 Controller로 보내는 일을 수행(가장 중요)
 		// user.getAuthorities()에는 Role list가 담겨있음(중요중요)
-		return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities() );
+		return new UsernamePasswordAuthenticationToken(userVO, null, userVO.getAuthorities() );
 	}
 
 	@Override

@@ -47,6 +47,7 @@ public class UserDetailsVO implements UserDetails{
 	 */
 	private static final long serialVersionUID = 1L;  // add default serialId
 	
+	private long id;
 	private String username;
 	private String password;
 	
