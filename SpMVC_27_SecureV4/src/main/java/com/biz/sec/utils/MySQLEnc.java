@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
-public class EncMain {
+public class MySQLEnc {
 
 	public static void main(String[] args) {
 
