@@ -44,8 +44,6 @@ public class MailSendService {
 	public void sendMail(String to_email, String subject, String content) {
 			
 		to_email = "hyerin.you@gmail.com";
-		subject = "메일보내기 테스트";
-		content = "안녕안녕";
 		
 		// mail을 보내기 위한 도구
 		MimeMessage message = javaMailSender.createMimeMessage();
@@ -119,6 +117,41 @@ public class MailSendService {
 		this.sendMail(to_email, subject, send_message);
 		
 		return send_message;
+	}
+
+
+	/**
+	 * @since 2020-04-21
+	 * email인증을 위한 token정보를 email로 전송하기
+	 * 
+	 * @param userVO 
+	 * @param email_token
+	 */
+	public void email_auth(UserDetailsVO userVO, String email_token) {
+
+		StringBuilder email_content = new StringBuilder();
+		
+		email_content.append("<style>");
+		email_content.append(".biz-token {");
+		email_content.append("border : 1px solid #33d6ff;");
+		email_content.append("background-color : #ccf5ff;");
+		email_content.append("color : black");
+		email_content.append("font-weight : bold");
+		email_content.append("}");
+		email_content.append("</style>");
+		
+		email_content.append("<h1>혜린나라 회원가입을 환영합니다</h1>");
+		email_content.append("<p>다음 인증코드를 회원가입폼의 인증코드란에 입력하셔야만<br/></p>");
+		email_content.append("<p>회원가입이 완료됩니다.</p>");
+		
+		email_content.append("<div class='biz-token'>");
+		email_content.append(email_token);
+		email_content.append("</div>");
+		
+		String subject = "혜린나라 회원인증 코드";
+		
+		this.sendMail(userVO.getEmail(), subject, email_content.toString());
+		
 	}
 
 

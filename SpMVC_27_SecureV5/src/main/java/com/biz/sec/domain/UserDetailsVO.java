@@ -18,7 +18,7 @@ import lombok.Setter;
  * 
  * UserDetail이라는 Interface를 implements하여 작성한다.
  * 
- * @update 2020-04-10
+ * updated 2020-04-10
  * User class를 상속받아 만든 userVO를 UserDetails 인터페이스를 implements한 UserDetailsVO로 변경
  * 
  * UserDetails interface를 implements한 UserDetailsVO로 변경

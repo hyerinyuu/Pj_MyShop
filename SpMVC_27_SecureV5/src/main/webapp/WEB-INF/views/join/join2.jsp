@@ -120,7 +120,7 @@ $(function(){
   <!-- 
   <input class="form-control" type="text" name="${_csrf.parameterName}" value="${_csrf.token}">
    -->
-  <form:form method="POST" action="${rootPath}/join/join_next" modelAttribute="userVO" >
+  <form:form method="POST" action="${rootPath}/join/user" modelAttribute="userVO" >
     <div class="form-group">
       <label for="username">User Id:</label>
       <form:input class="form-control" path="username" placeholder="Enter user ID" />
