@@ -13,6 +13,9 @@
 			left:0;
 			width:100%;
 			display: flex;
+			
+			font-family: 'Recipekorea'; 
+			
 		}
 		#body menu {
 			flex:1;
@@ -85,7 +88,7 @@
 		<menu>
 			<h3>관리자 페이지</h3>
 			<ul>
-				<li><a href="javascript:void(0)" id="user_list">User List</a>
+				<li><a href="javascript:void(0)" id="user_list">USER LIST</a>
 				<li><a href="#">메뉴1</a>
 				<li><a href="#">메뉴2</a>
 			</ul>

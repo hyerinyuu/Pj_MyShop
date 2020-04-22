@@ -12,7 +12,7 @@
 <script>
 	$(function(){
 		$(document).on("click", "button.join", function(){
-			document.location.href = "${rootPath}/user/join"
+			document.location.href = "${rootPath}/join"
 			
 		})
 		
@@ -50,6 +50,7 @@
 	margin-top: 220px;
 	/* font-family: 'Playfair Display', serif;*/
 	font-family: 'Do Hyeon', sans-serif;
+	height : 100%;
 }
 
 .login_text{
@@ -64,6 +65,7 @@
 }
 </style>
 <body>
+<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 <div class="container login-form">
   <h1 class="text-center login_text">LOGIN</h1>
   <form:form action="${rootPath}/login" method="POST">

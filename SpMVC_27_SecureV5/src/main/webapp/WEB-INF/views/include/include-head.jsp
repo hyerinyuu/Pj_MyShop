@@ -11,3 +11,18 @@
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:600,700&display=swap" rel="stylesheet">
 <!-- 한글폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+<style>
+@font-face { 
+	font-family: 'Binggrae-Bold'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+}
+
+@font-face { 
+	font-family: 'Recipekorea'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+}
+</style>

@@ -26,6 +26,9 @@
 			
 			if(pass != ""){
 				
+				$("#btn-save").css("display","inline")
+				$("#btn-lostpass").css("display","inline")
+				
 				$.ajax({
 					url : '${rootPath}/user/password',
 					method: 'POST',  // post로 데이터를 보낼때는 반드시 csrf token도 같이 보내줘야함(get은 상관x)
@@ -36,7 +39,7 @@
 					success: function(result){
 						if(result == 'PASS_OK'){
 							$("input").prop("readonly", false)
-							$("input").css("color", "blue")
+							$("input").css("color", "black")
 							$("button#btn-save").prop("disabled", false)
 							$("button#btn-update").prop("disabled", true)
 						}else{
@@ -59,15 +62,19 @@
 <style> 
 .mypage-form{
 	margin-top : 250px;
+	font-family: 'Recipekorea'; 
 }
 
-form div.password {
+form div.password, #btn-lostpass, #btn-save {
 	display: none;
 }
 </style>
 <body>
 <div class="container mypage-form">
 	<form:form modelAttribute="userVO">
+		<h1>${userVO.username}'s MYPAGE</h1>
+		<hr/>
+		
 		<div class="form-group">
 			<form:input path="username" class="form-control"/>
 		</div>
@@ -90,8 +97,8 @@ form div.password {
 		
 		<div>
 			<button type="button" id="btn-update" class="btn btn-primary">수정</button>
-			<button type="button" id="btn-lostpass" class="btn btn-warning">비밀번호 찾기</button>
 			<button type="submit" id="btn-save" class="btn btn-danger">저장</button>
+			<button type="button" id="btn-lostpass" class="btn btn-warning">비밀번호 찾기</button>
 		</div>
 	</form:form>
 </div>

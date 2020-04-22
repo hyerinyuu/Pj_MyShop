@@ -24,6 +24,8 @@
 		width:100%;
 		display: flex;
 		transition : top 0.3s;
+		
+		font-family: 'Recipekorea'; 
 	}
 	
 	#navbar a{
@@ -79,6 +81,7 @@ $(function(){
 	
 	<sec:authorize access="isAnonymous()">
 		<a href="${rootPath}/user/login" id="login">LOGIN</a>
+		<a href="${rootPath}/join" id="join">JOIN</a>
 	</sec:authorize>
 	
 	<sec:authorize access="isAuthenticated()">

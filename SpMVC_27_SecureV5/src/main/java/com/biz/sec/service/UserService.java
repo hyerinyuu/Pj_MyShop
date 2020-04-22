@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.sec.domain.AuthorityVO;
@@ -87,7 +88,8 @@ public class UserService {
 	 * Map String,String 구조의 VO 데이터를 UserVO로 변경
 	 * 
 	 */
-	@Transactional
+	@Transactional(isolation = Isolation.READ_COMMITTED, // COMMIT이 수행되기 전에는 읽을 수 없음
+			rollbackFor = Exception.class) // 모든 exception이 발생하면 rollback하라(rollback 조건)
 	public int insert(String username, String password) {
 		
 		// 회원가입 form에서 전달받은 password값을 암호화시키는 과정
@@ -208,6 +210,12 @@ public class UserService {
 		return ret;
 	}
 
+	/**
+	 * MyPage Update용
+	 * 
+	 * @param userVO
+	 * @return
+	 */
 	@Transactional
 	public int update(UserDetailsVO userVO) {
 		
@@ -223,7 +231,8 @@ public class UserService {
 		oldUserVO.setPhone(userVO.getPhone());
 		oldUserVO.setAddress(userVO.getAddress());
 		
-		int ret = userDao.update(userVO);
+		int ret = userDao.update(oldUserVO);
+		
 		
 		// update를 수행했는데도 view화면의 value가 변하지 않는 문제 발생
 		// session에 value가 update되지 않은 탓
@@ -258,6 +267,7 @@ public class UserService {
 		return userDao.selectAll();
 	}
 
+	@Transactional
 	public UserDetailsVO findByUserName(String username) {
 		return userDao.findByUserName(username);
 	}
@@ -305,6 +315,7 @@ public class UserService {
 	 * @param userVO
 	 * @return
 	 */
+	@Transactional
 	public String insert_getToken(UserDetailsVO userVO) {
 		//DB에 저장
 		// 인증이 안되면 로그인을 할 수 없게 Enabled false로 먼저 세팅

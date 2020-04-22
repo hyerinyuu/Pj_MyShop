@@ -58,8 +58,9 @@ public class JoinController {
 	 * @return
 	 */
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String join(@ModelAttribute("userVO") UserDetailsVO userVO, Model model) {
+	public String join(@ModelAttribute("userVO") UserDetailsVO userVO, Model model, SessionStatus session) {
 		
+		session.setComplete();
 		return  "join/join";
 	}
 	
@@ -99,11 +100,11 @@ public class JoinController {
 	@RequestMapping(value="/join_last", method=RequestMethod.POST)
 	public String join_last(@ModelAttribute("userVO") UserDetailsVO userVO, Model model) {
 		
-//		String email_token = userService.insert_getToken(userVO);
+		String email_token = userService.insert_getToken(userVO);
 		
 		// ajax로 보내서 userVO가 안 넘어오므로 username을 추출해야함
-//		model.addAttribute("username", PbeEncryptor.getEncrypt(userVO.getUsername()));
-//		model.addAttribute("My_Email_Secret", email_token);
+		model.addAttribute("username", PbeEncryptor.getEncrypt(userVO.getUsername()));
+		model.addAttribute("My_Email_Secret", email_token);
 		model.addAttribute("JOIN", "EMAIL_OK");
 		return "join/join_email";
 	}

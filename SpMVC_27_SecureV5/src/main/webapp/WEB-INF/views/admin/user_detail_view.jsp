@@ -16,6 +16,10 @@
 	#auth_append{
 		margin-bottom: 1rem;
 	}
+	
+	.state{
+		color : red;
+	}
 </style>
 <section>
 	<form:form modelAttribute="userVO">
@@ -41,7 +45,16 @@
 		</div>
 		
 		<div class="form-group">
-			<label for="address">계정활성화 : </label>
+			
+			<c:choose>
+				<c:when test="${userVO.enabled}">
+					<p class="state">계정 활성상태 : 활성</p>
+				</c:when>
+				<c:otherwise>
+					<p class="state">계정 활성상태 : 비활성</p>
+				</c:otherwise>
+			</c:choose>
+			<label for="address">계정활성상태변경 : </label>
 			<form:checkbox path="enabled"/>
 		</div>
 		

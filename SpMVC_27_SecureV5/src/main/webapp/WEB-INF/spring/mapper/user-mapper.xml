@@ -14,7 +14,7 @@
  	<select id="selectAll" resultMap="userAndAuthorities">
  		SELECT user_name AS username,
  			user_pass AS password,
- 			email, phone, address
+ 			email, phone, address, enabled
  		FROM tbl_users
  	</select>
  	

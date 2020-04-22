@@ -81,7 +81,6 @@ public class UserController {
 	
 	// mypage1과 mypage는 코드는 다르지만 같은 일을 수행함
 	// 사용자 정보를 어떻게 추출하는지의 차이
-	
 	// @ResponseBody
 	@RequestMapping(value="/mypage", method=RequestMethod.GET)
 	public String mypage(Principal principal, Model model) {
@@ -112,10 +111,12 @@ public class UserController {
 	}
 		
 	
-	
+	/*
+	 * mypage에서 저장을 눌렀을 때 form에 입력된 데이터가 userVO에 담겨서 전달
+	 */
 	// @ResponseBody
 	@RequestMapping(value="/mypage", method=RequestMethod.POST)
-	public String mypage(UserDetailsVO userVO,Principal principal, String[] auth, Model model) {
+	public String mypage(UserDetailsVO userVO,Principal principal, Model model) {
 		
 		/*
 		 * Security Session 정보가 저장된 메모리에 직접 접근하여

@@ -15,6 +15,7 @@ table tr td{
 			<th>Email</th>
 			<th>Phone</th>
 			<th>Address</th>
+			<th>State</th>
 		</tr>
 		<c:choose>
 			<c:when test="${empty userList}">
@@ -28,6 +29,14 @@ table tr td{
 						<td>${user.email}</td>
 						<td>${user.phone}</td>
 						<td>${user.address}</td>
+						<c:choose>
+							<c:when test="${user.enabled}">
+								<td>활성화</td>
+							</c:when>
+							<c:otherwise>
+							 	<td>비활성화</td>
+							</c:otherwise>
+						</c:choose>	
 					</tr>
 				</c:forEach>
 			</c:otherwise>
