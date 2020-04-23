@@ -39,7 +39,7 @@
 	}
 	
 	#navbar a:hover {
-		background-color: #ddd;
+		background: #eadff2;
 		color: black;
 	}
 	

@@ -6,6 +6,18 @@ table tr td{
 	cursor: pointer;
 }
 
+.active {
+	color : red;
+}
+
+.dead{
+	color : lightgray;
+}
+.line-thourgh {
+	text-decoration: line-through;
+	color: lightgray;
+}
+
 </style>
 <div class="table-view">
 	<table class="table table-striped">
@@ -24,17 +36,22 @@ table tr td{
 			<c:otherwise>
 				<c:forEach items="${userList}" var="user" varStatus="i">
 					<tr data-id="${user.username}" class="tr_user">
-						<td>${i.count}</td>
-						<td>${user.username}</td>
-						<td>${user.email}</td>
-						<td>${user.phone}</td>
-						<td>${user.address}</td>
+						<td
+								<c:if test="${!user.enabled}"> class="line-thourgh"</c:if>>${i.count}</td>
+						<td
+								<c:if test="${!user.enabled}"> class="line-thourgh"</c:if>>${user.username}</td>
+						<td
+								<c:if test="${!user.enabled}"> class="line-thourgh"</c:if>>${user.email}</td>
+						<td
+								<c:if test="${!user.enabled}"> class="line-thourgh"</c:if>>${user.phone}</td>
+						<td
+								<c:if test="${!user.enabled}"> class="line-thourgh"</c:if>>${user.address}</td>
 						<c:choose>
 							<c:when test="${user.enabled}">
-								<td>활성화</td>
+								<td class="active">활성</td>
 							</c:when>
 							<c:otherwise>
-							 	<td>비활성화</td>
+							 	<td class="dead">정지</td>
 							</c:otherwise>
 						</c:choose>	
 					</tr>

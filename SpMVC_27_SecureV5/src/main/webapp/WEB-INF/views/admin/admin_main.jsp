@@ -19,8 +19,9 @@
 		}
 		#body menu {
 			flex:1;
-			border: 1px solid blue;
-			margin: 5px;
+			margin: 8px;
+			align-content: center;
+			align-items: center;
 		}
 		
 		#body menu li {
@@ -29,22 +30,30 @@
 		
 		#body menu li a {
 			display: inline-block;
-			padding: 5px 10px;
+			padding: 10px 10px;
 			text-decoration: none;
-			width: 150px;
+			width: 170px;
 			margin-left: 10px;
-			border-bottom: 2px solid transparent;
+			border-bottom: 2px solid white;
+			background: #dccbed;
+			
+			color : black;
+			
 		}
 		
 		#body menu li a:hover {
-			border-bottom: 2px solid yellow;
+			background: #eadff2;
+			border-bottom: 2px solid black;
 			transition : ease 0.3s;
 		}
 		
 		#body article {
-			flex: 3;
-			border: 1px solid blue;
+			flex: 5;
 			margin: 5px;
+		}
+		
+		#admin_content table, #admin_content form{
+			width : 90%;
 		}
 	</style>
 	<script>
@@ -86,7 +95,7 @@
 	<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 	<section id="body">
 		<menu>
-			<h3>관리자 페이지</h3>
+			<h3>&nbsp;관리자 페이지</h3>
 			<ul>
 				<li><a href="javascript:void(0)" id="user_list">USER LIST</a>
 				<li><a href="#">메뉴1</a>

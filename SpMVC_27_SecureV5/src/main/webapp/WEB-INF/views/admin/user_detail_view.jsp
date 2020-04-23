@@ -21,6 +21,20 @@
 		color : red;
 	}
 </style>
+<script>
+	$(function(){
+		let state = $("#state p").text()
+		if(state == '계정상태 : 정지'){
+			$("form input").css({
+				color : "lightgray"
+			})
+			alert("권한정지 계정입니다.")
+		}
+		
+	
+	})
+	
+</script>
 <section>
 	<form:form modelAttribute="userVO">
 		
@@ -44,18 +58,21 @@
 			<form:input path="address" class="form-control"/>
 		</div>
 		
-		<div class="form-group">
+		<div class="form-group" id="state">
 			
 			<c:choose>
 				<c:when test="${userVO.enabled}">
-					<p class="state">계정 활성상태 : 활성</p>
+					<p class="state">계정상태 : 활성</p>
+					<label for="address">이 유저를 정지하려면 체크를 해제하세요 : </label>
+					<form:checkbox path="enabled"/>
 				</c:when>
 				<c:otherwise>
-					<p class="state">계정 활성상태 : 비활성</p>
+					<p class="state">계정상태 : 정지</p>
+					<label for="address">이 유저를 활성화하려면 체크하세요 : </label>
+					<form:checkbox path="enabled"/>
 				</c:otherwise>
 			</c:choose>
-			<label for="address">계정활성상태변경 : </label>
-			<form:checkbox path="enabled"/>
+			
 		</div>
 		
 		<div id="auth_box" class="form-group">
@@ -71,3 +88,4 @@
 		</div>
 	</form:form>
 </section>
+
